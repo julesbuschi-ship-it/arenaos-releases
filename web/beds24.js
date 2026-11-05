@@ -110,12 +110,18 @@
     var t = d.querySelector('.confirmationtable');
     if (!t || d.querySelector('.arena-sum')) return;
     var en = lang() === 'en', K = [], M = {}, T = 0;
-    function n(s) { return parseFloat(s.replace(/[^\d,]/g, '').replace(',', '.')) || 0; }
-    function g(v) { return v.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €'; }
+    function n(s) {
+      s = (s || '').replace(/[^\d.,]/g, '');
+      var i = Math.max(s.lastIndexOf(','), s.lastIndexOf('.'));
+      if (i >= 0 && s.length - i - 1 <= 2) s = s.slice(0, i).replace(/[.,]/g, '') + '.' + s.slice(i + 1);
+      else s = s.replace(/[.,]/g, '');
+      return parseFloat(s) || 0;
+    }
+    function g(v) { return v.toLocaleString(en ? 'en-GB' : 'fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €'; }
     [].slice.call(t.rows, 1).forEach(function (r) {
       var c = [].map.call(r.cells, function (x) { return x.textContent.replace(/\s+/g, ' ').trim(); }), m, k;
       if (!c[0]) return;
-      if (/^Total/.test(c[0])) { T = n(c[3]); return; }
+      if (/^(Grand )?Total/i.test(c[0])) { T = n(c[c.length - 1]); return; }
       m = c[0].match(/^(.+?) \S+, /);
       k = m ? m[1] : c[0].replace(/\s+\d.*$/, '');
       if (!M[k]) { M[k] = { q: 0, v: 0, r: !!m }; K.push(k); }
