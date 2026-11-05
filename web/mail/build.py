@@ -161,7 +161,8 @@ TC = {
   k_nights="Dur\u00e9e", v_nights="[NUMNIGHT] nuit[IF&gt;:[NUMNIGHT]:1:s|]",
   k_rooms="Chambre[IF&gt;:[NUMROOMS]:1:s|]", v_rooms="[IF=:[NUMROOMS]:1:[ROOMNAME1]|[ROOMNAMES]]",
   k_guests="Voyageurs", v_guests="[NUMADULT] adulte[IF&gt;:[NUMADULT]:1:s|][IF=:[NUMCHILD]:1: et 1 enfant|][IF&gt;:[NUMCHILD]:1: et [NUMCHILD] enfants|]",
-  money_l="Carte bancaire", money="Aucun montant n'a \u00e9t\u00e9 d\u00e9bit\u00e9. Les coordonn\u00e9es de carte enregistr\u00e9es en garantie ne seront pas utilis\u00e9es et sont supprim\u00e9es. Si l'annulation intervient hors du d\u00e9lai pr\u00e9vu par nos conditions g\u00e9n\u00e9rales de vente, nous vous contacterons avant tout pr\u00e9l\u00e8vement.",
+  money_l="Carte bancaire", money="Votre annulation intervient dans le d\u00e9lai d'annulation sans frais. Aucun montant n'a \u00e9t\u00e9 d\u00e9bit\u00e9 et ne le sera. Les coordonn\u00e9es de carte enregistr\u00e9es en garantie sont supprim\u00e9es.",
+  fees_l="Frais d'annulation", fees="Votre annulation intervient apr\u00e8s le d\u00e9lai d'annulation sans frais (18h00 le septi\u00e8me jour pr\u00e9c\u00e9dant l'arriv\u00e9e). Conform\u00e9ment \u00e0 nos <a href=\"%s\" style=\"color:%s;\">conditions g\u00e9n\u00e9rales de vente</a> (art. 6.2 et 8), l'int\u00e9gralit\u00e9 du s\u00e9jour r\u00e9serv\u00e9 reste due, soit <strong>[PRICE] \u20ac</strong>. Aucun montant n'a \u00e9t\u00e9 d\u00e9bit\u00e9 \u00e0 ce jour : nous vous \u00e9crirons avant tout pr\u00e9l\u00e8vement sur la carte enregistr\u00e9e en garantie. Si des circonstances particuli\u00e8res expliquent cette annulation, dites-le-nous en r\u00e9pondant \u00e0 ce message : nous \u00e9tudions chaque situation." % (CGV, C_GREEN),
   mistake_l="Une erreur ?", mistake="Si cette annulation n'est pas de votre fait, r\u00e9pondez simplement \u00e0 ce message ou appelez-nous : nous v\u00e9rifierons imm\u00e9diatement la disponibilit\u00e9 pour r\u00e9tablir votre s\u00e9jour.",
   again_l="Revenir", again="Nos chambres et nos tarifs restent consultables sur <a href=\"%sreservation/\" style=\"color:%s;\">notre page de r\u00e9servation</a> : nous serons heureux de vous accueillir \u00e0 une autre date." % (SITE, C_GREEN),
   close1="Nous restons \u00e0 votre disposition pour toute question.",
@@ -177,7 +178,8 @@ TC = {
   k_nights="Length", v_nights="[NUMNIGHT] night[IF&gt;:[NUMNIGHT]:1:s|]",
   k_rooms="Room[IF&gt;:[NUMROOMS]:1:s|]", v_rooms="[IF=:[NUMROOMS]:1:[ROOMNAME1]|[ROOMNAMES]]",
   k_guests="Guests", v_guests="[NUMADULT] adult[IF&gt;:[NUMADULT]:1:s|][IF=:[NUMCHILD]:1: and 1 child|][IF&gt;:[NUMCHILD]:1: and [NUMCHILD] children|]",
-  money_l="Bank card", money="Nothing has been charged. The card details stored as a guarantee will not be used and are deleted. Should the cancellation fall outside the period set out in our terms and conditions, we will contact you before any charge is made.",
+  money_l="Bank card", money="Your cancellation falls within the free cancellation period. Nothing has been charged and nothing will be. The card details stored as a guarantee are deleted.",
+  fees_l="Cancellation fees", fees="Your cancellation comes after the free cancellation deadline (6:00 pm on the seventh day before arrival). In accordance with our <a href=\"%s\" style=\"color:%s;\">terms and conditions</a> (art. 6.2 and 8), the full booked stay remains due, i.e. <strong>\u20ac[PRICE]</strong>. Nothing has been charged to date: we will write to you before any charge is made to the card stored as a guarantee. If particular circumstances explain this cancellation, let us know by replying to this message: we consider every situation." % (CGV, C_GREEN),
   mistake_l="A mistake?", mistake="If you did not request this cancellation, simply reply to this message or call us: we will immediately check availability to reinstate your stay.",
   again_l="Coming back", again="Our rooms and rates remain available on <a href=\"%sen/reservation/\" style=\"color:%s;\">our booking page</a>: we would be delighted to welcome you on another date." % (SITE, C_GREEN),
   close1="We remain at your disposal for any question.",
@@ -206,7 +208,8 @@ def build_cancel(L):
      '<tr><td style="padding:22px 24px 14px;">' + label(t["stay"]) +
      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tbody>' + row(t["k_dates"], t["v_dates"]) + row(t["k_nights"], t["v_nights"]) + row(t["k_rooms"], t["v_rooms"]) + row(t["k_guests"], t["v_guests"], True) +
      '</tbody></table></td></tr></tbody></table></td></tr>'
-     '<tr><td class="arena-pad" style="padding:6px 44px 0;">' + label(t["money_l"]) + para(t["money"], 20) + label(t["mistake_l"]) + para(t["mistake"], 20) + label(t["again_l"]) + para(t["again"], 30) + '</td></tr>'
+     # Sans frais si (arrivee - 7 jours) >= aujourd'hui, sinon frais. Forme ^ ~ du IF Beds24 : accepte les deux-points du HTML (testee dans le Simulator le 05/11).
+     '<tr><td class="arena-pad" style="padding:6px 44px 0;">[IF&gt;=^[FIRSTNIGHT:-7day{%Y%m%d}]^[CURRENTDATE:{%Y%m%d}]^' + label(t["money_l"]) + para(t["money"], 20) + '~' + label(t["fees_l"]) + para(t["fees"], 20) + ']' + label(t["mistake_l"]) + para(t["mistake"], 20) + label(t["again_l"]) + para(t["again"], 30) + '</td></tr>'
      '<tr><td class="arena-pad" style="padding:0 44px 22px;border-top:1px solid ' + C_LINE + ';"><div style="height:26px;line-height:26px;font-size:0;">&nbsp;</div>'
      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + C_CARD + ';border-radius:14px;"><tbody><tr><td style="padding:22px 24px 20px;">'
      '<p style="margin:0 0 10px;font-family:' + SERIF + ';font-size:18px;line-height:1.3;color:' + C_INK + ';">' + t["addr_name"] + '</p>'
