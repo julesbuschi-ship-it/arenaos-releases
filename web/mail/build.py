@@ -76,7 +76,7 @@ def label(txt):
     return ('<p style="margin:0 0 6px;font-family:%s;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:%s;">%s</p>' % (SANS, C_GREEN, txt))
 
 def para(txt, mb=16, size=15):
-    return '<p style="margin:0 0 %dpx;font-family:%s;font-size:%dpx;line-height:1.75;color:%s;">%s</p>' % (mb, SANS, size, C_TEXT, txt)
+    return '<p style="margin:0 0 %dpx;font-family:%s;font-size:%dpx;line-height:1.75;color:%s;text-align:justify;-webkit-hyphens:auto;hyphens:auto;">%s</p>' % (mb, SANS, size, C_TEXT, txt)
 
 def h2(txt):
     return '<p style="margin:0 0 14px;font-family:%s;font-size:21px;line-height:1.3;letter-spacing:.02em;color:%s;">%s</p>' % (SERIF, C_INK, txt)
@@ -101,12 +101,12 @@ def build(L):
              ".arena-inv a,[x-apple-data-detectors]{color:inherit!important;text-decoration:none!important}"
              "@media only screen and (max-width:620px){.arena-pad{padding-left:22px!important;padding-right:22px!important}.arena-mail .arena-hello{font-size:24px!important}}"
              "</style>")
-    items = "".join('<p style="margin:0 0 14px;font-family:%s;font-size:15px;line-height:1.75;color:%s;"><span style="display:block;font-family:%s;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:%s;margin:0 0 3px;">%s</span>%s</p>' % (SANS, C_TEXT, SANS, C_GREEN, k, v) for k, v in t["items"])
+    items = "".join('<p style="margin:0 0 16px;font-family:%s;font-size:15px;line-height:1.75;color:%s;text-align:justify;-webkit-hyphens:auto;hyphens:auto;"><span style="display:block;font-family:%s;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:%s;margin:0 0 3px;">%s</span>%s</p>' % (SANS, C_TEXT, SANS, C_GREEN, k, v) for k, v in t["items"])
     html = (
      # Beds24 envoie <html><body> sans <head> : sans viewport, iPhone Mail met en page sur 980 px puis réduit tout.
      # WebKit honore la balise viewport même dans le body ; sur l'écran de confirmation Beds24 elle est identique à celle de la page.
      # x-apple-disable-message-reformatting : empêche Apple Mail de « reformater » (réduire) le message sur iPhone.
-     '<div class="arena-mail"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="x-apple-disable-message-reformatting">' + style +
+     '<div class="arena-mail" lang="' + ('fr' if L == 'FR' else 'en') + '"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="x-apple-disable-message-reformatting">' + style +
      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + C_BG + ';"><tbody><tr><td align="center" style="padding:28px 12px;">'
      '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#FFFFFF;border-radius:18px;overflow:hidden;"><tbody>'
      # en-tête
