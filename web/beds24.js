@@ -61,6 +61,18 @@
     });
   }
 
+  /* 2c. Mention RGPD sous la case CGV du formulaire Coordonnées (lien vers /donnees-personnelles/) */
+  function privacyNote() {
+    var cb = d.querySelector('.b24-guestdetails .questionrow input[type=checkbox]');
+    if (!cb || d.querySelector('.arena-privacy')) return;
+    var row = cb.closest('.questionrow'), p = d.createElement('div'), fr = lang() === 'fr';
+    p.className = 'questionrow arena-privacy';
+    p.innerHTML = fr
+      ? 'Vos donn\u00e9es sont trait\u00e9es par la SARL Le Refuge pour g\u00e9rer votre r\u00e9servation et votre s\u00e9jour. En savoir plus : <a href="https://www.hotel-arenalerefuge.com/donnees-personnelles/" target="_blank" rel="noopener">Politique de confidentialit\u00e9</a>.'
+      : 'Your data is processed by SARL Le Refuge to manage your booking and stay. Learn more: <a href="https://www.hotel-arenalerefuge.com/donnees-personnelles/" target="_blank" rel="noopener">Privacy Policy</a>.';
+    row.parentNode.insertBefore(p, row.nextSibling);
+  }
+
   /* 3. Formulaire client : message d'erreur clair et champs en rouge au lieu de la validation silencieuse */
   function formErrors() {
     var f = d.forms.formbook, b = f ? f.querySelector('[name=bookbook]') : null;
@@ -126,6 +138,7 @@
     try { titleSelect(); } catch (e) {}
     try { capBreakfasts(); } catch (e) {}
     try { cgvText(); } catch (e) {}
+    try { privacyNote(); } catch (e) {}
     try { formErrors(); } catch (e) {}
     try { guaranteeSummary(); } catch (e) {}
   });
