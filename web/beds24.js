@@ -185,7 +185,29 @@
     if (F) C.querySelectorAll('.dt').forEach(function (e) { e.textContent = e.textContent.replace(',', '').replace(/ 1 /, ' 1er '); });
   }
 
+  /* 7. Dans l'overlay du site (iframe de /reservation/) : envoyer la hauteur au parent (l'iframe est en scrolling=no,
+        c'est l'overlay qui defile) et fermer l'overlay quand on clique « Retour au site » au lieu d'ouvrir le site dans l'iframe */
+  function overlayBridge() {
+    if (w.parent === w) return;
+    function post() {
+      try { w.parent.postMessage({ arenaH: d.documentElement.scrollHeight }, '*'); } catch (e) {}
+    }
+    post();
+    setInterval(post, 500);
+    w.addEventListener('load', post);
+    d.addEventListener('click', function (e) {
+      var a = e.target.closest('a');
+      if (!a) return;
+      var h = a.getAttribute('href') || '';
+      if (/^https?:\/\/(www\.)?hotel-arenalerefuge\.com\/?((en|it|de|nl)\/?)?$/.test(h)) {
+        e.preventDefault();
+        try { w.parent.postMessage({ arenaClose: true }, '*'); } catch (x) {}
+      }
+    }, true);
+  }
+
   ready(function () {
+    try { overlayBridge(); } catch (e) {}
     try { confirmScreen(); } catch (e) {}
     try { titleSelect(); } catch (e) {}
     try { capBreakfasts(); } catch (e) {}
