@@ -31,7 +31,7 @@ T = {
   pay_l="Paiement", pay="Le règlement s'effectue sur place. Aucun montant n'a été prélevé à ce jour : les coordonnées de votre carte bancaire ont été enregistrées à titre de garantie.",
   cancel_l="Annulation", cancel="Vous pouvez annuler ou modifier votre réservation sans frais jusqu'à sept jours avant la date d'arrivée, en répondant simplement à ce message ou en nous appelant. Au-delà de ce délai, l'intégralité du séjour reste due. Les conditions générales de vente sont consultables <a href=\"%s\" style=\"color:%s;\">ici</a>." % (CGV, C_GREEN),
   prep="Pour préparer votre venue",
-  addr_name="Hôtel Arena Le Refuge", addr="1425 route de la Restonica, 20250 Corte", route="Itinéraire",
+  addr_name="Hôtel Arena Le Refuge", addr1="1425 route de la Restonica", addr2="20250 Corte", route="Itinéraire",
   tel="04 95 46 09 13", mail="contact@hotel-arenalerefuge.com",
   items=[("Parking","L'hôtel dispose d'un parking privé gratuit, directement devant l'établissement."),
          ("Petit-déjeuner","Servi de 7h30 à 10h30 (15 € par adulte, 10 € par enfant). Les petits-déjeuners éventuellement indiqués dans votre réservation sont donnés à titre indicatif : nous les confirmons avec vous à votre arrivée."),
@@ -57,7 +57,7 @@ T = {
   pay_l="Payment", pay="Payment is made at the hotel. Nothing has been charged to date: your card details have been stored as a guarantee only.",
   cancel_l="Cancellation", cancel="You may cancel or change your booking free of charge up to seven days before the arrival date, simply by replying to this message or calling us. After that, the full stay remains due. Our terms and conditions are available <a href=\"%s\" style=\"color:%s;\">here</a>." % (CGV, C_GREEN),
   prep="Preparing your visit",
-  addr_name="Hôtel Arena Le Refuge", addr="1425 route de la Restonica, 20250 Corte", route="Directions",
+  addr_name="Hôtel Arena Le Refuge", addr1="1425 route de la Restonica", addr2="20250 Corte, Corsica", route="Directions",
   tel="+33 4 95 46 09 13", mail="contact@hotel-arenalerefuge.com",
   items=[("Parking","The hotel has a free private car park right in front of the building."),
          ("Breakfast","Served from 7:30 to 10:30 am (€15 per adult, €10 per child). Any breakfasts indicated in your booking are for guidance only: we will confirm them with you on arrival."),
@@ -132,9 +132,10 @@ def build(L):
      # préparer
      '<tr><td class="arena-pad" style="padding:0 44px 0;border-top:1px solid ' + C_LINE + ';"><div style="height:30px;line-height:30px;font-size:0;">&nbsp;</div>' + h2(t["prep"]) + '</td></tr>'
      '<tr><td class="arena-pad" style="padding:4px 44px 22px;">'
-     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + C_CARD + ';border-radius:14px;"><tbody><tr><td style="padding:18px 22px;font-family:' + SANS + ';font-size:14px;line-height:1.7;color:' + C_TEXT + ';">'
-     '<span style="font-family:' + SERIF + ';font-size:17px;color:' + C_INK + ';">' + t["addr_name"] + '</span><br>' + t["addr"] + ' &nbsp;·&nbsp; <a href="' + MAPS + '" style="color:' + C_GREEN + ';">' + t["route"] + '</a><br>'
-     '<a href="tel:+33495460913" style="color:' + C_INK + ';text-decoration:none;">' + t["tel"] + '</a> &nbsp;·&nbsp; <a href="mailto:contact@hotel-arenalerefuge.com" style="color:' + C_GREEN + ';">' + t["mail"] + '</a>'
+     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + C_CARD + ';border-radius:14px;"><tbody><tr><td style="padding:22px 24px 20px;">'
+     '<p style="margin:0 0 10px;font-family:' + SERIF + ';font-size:18px;line-height:1.3;color:' + C_INK + ';">' + t["addr_name"] + '</p>'
+     '<p style="margin:0 0 14px;font-family:' + SANS + ';font-size:15px;line-height:1.6;color:' + C_TEXT + ';">' + t["addr1"] + '<br>' + t["addr2"] + '<br><a href="' + MAPS + '" style="color:' + C_GREEN + ';text-decoration:none;font-weight:500;">' + t["route"] + ' &rarr;</a></p>'
+     '<p style="margin:0;font-family:' + SANS + ';font-size:15px;line-height:1.6;color:' + C_TEXT + ';"><a href="tel:+33495460913" style="color:' + C_INK + ';text-decoration:none;">' + t["tel"] + '</a><br><a href="mailto:contact@hotel-arenalerefuge.com" style="color:' + C_GREEN + ';text-decoration:none;">' + t["mail"] + '</a></p>'
      '</td></tr></tbody></table></td></tr>'
      '<tr><td class="arena-pad" style="padding:0 44px 6px;">' + items +
      '<p style="margin:14px 0 14px;font-family:' + SANS + ';font-size:15px;line-height:1.75;color:' + C_TEXT + ';"><span style="display:block;font-family:' + SANS + ';font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:' + C_GREEN + ';margin:0 0 3px;">' + t["around_l"] + '</span>' + t["around"] + '</p>'
