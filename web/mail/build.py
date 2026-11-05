@@ -150,7 +150,78 @@ def build(L):
      '</tbody></table></td></tr></tbody></table></div>')
     return html
 
+
+# --- E-mail d'annulation (action automatique Beds24, déclencheur « annulation ») ---------------------------
+TC = {
+ "FR": dict(
+  ref="Annulation \u2013 r\u00e9servation n\u00b0 [BOOKID]",
+  hello="[GUESTTITLE] [GUESTNAME],",
+  intro="Nous vous confirmons l'annulation de votre r\u00e9servation n\u00b0 [BOOKID] \u00e0 l'H\u00f4tel Arena Le Refuge.",
+  stay="S\u00e9jour annul\u00e9", k_dates="Dates", v_dates="du [FIRSTNIGHT:{%e %B %Y}] au [LEAVINGDAY:{%e %B %Y}]",
+  k_nights="Dur\u00e9e", v_nights="[NUMNIGHT] nuit[IF&gt;:[NUMNIGHT]:1:s|]",
+  k_rooms="Chambre[IF&gt;:[NUMROOMS]:1:s|]", v_rooms="[IF=:[NUMROOMS]:1:[ROOMNAME1]|[ROOMNAMES]]",
+  k_guests="Voyageurs", v_guests="[NUMADULT] adulte[IF&gt;:[NUMADULT]:1:s|][IF=:[NUMCHILD]:1: et 1 enfant|][IF&gt;:[NUMCHILD]:1: et [NUMCHILD] enfants|]",
+  money_l="Carte bancaire", money="Aucun montant n'a \u00e9t\u00e9 d\u00e9bit\u00e9. Les coordonn\u00e9es de carte enregistr\u00e9es en garantie ne seront pas utilis\u00e9es et sont supprim\u00e9es. Si l'annulation intervient hors du d\u00e9lai pr\u00e9vu par nos conditions g\u00e9n\u00e9rales de vente, nous vous contacterons avant tout pr\u00e9l\u00e8vement.",
+  mistake_l="Une erreur ?", mistake="Si cette annulation n'est pas de votre fait, r\u00e9pondez simplement \u00e0 ce message ou appelez-nous : nous v\u00e9rifierons imm\u00e9diatement la disponibilit\u00e9 pour r\u00e9tablir votre s\u00e9jour.",
+  again_l="Revenir", again="Nos chambres et nos tarifs restent consultables sur <a href=\"%sreservation/\" style=\"color:%s;\">notre page de r\u00e9servation</a> : nous serons heureux de vous accueillir \u00e0 une autre date." % (SITE, C_GREEN),
+  close1="Nous restons \u00e0 votre disposition pour toute question.",
+  close2="Au plaisir de vous accueillir prochainement dans la vall\u00e9e de la Restonica,", sign="L'\u00e9quipe de l'H\u00f4tel Arena Le Refuge",
+  addr_name="H\u00f4tel Arena Le Refuge", addr1="1425 route de la Restonica", addr2="20250 Corte", route="Itin\u00e9raire",
+  tel="04 95 46 09 13", mail="contact@hotel-arenalerefuge.com", foot_cgv="Conditions g\u00e9n\u00e9rales de vente",
+ ),
+ "EN": dict(
+  ref="Cancellation \u2013 booking no. [BOOKID]",
+  hello="[GUESTTITLE] [GUESTNAME],",
+  intro="We confirm the cancellation of your booking no. [BOOKID] at H\u00f4tel Arena Le Refuge.",
+  stay="Cancelled stay", k_dates="Dates", v_dates="[FIRSTNIGHT:{%e %B %Y}] to [LEAVINGDAY:{%e %B %Y}]",
+  k_nights="Length", v_nights="[NUMNIGHT] night[IF&gt;:[NUMNIGHT]:1:s|]",
+  k_rooms="Room[IF&gt;:[NUMROOMS]:1:s|]", v_rooms="[IF=:[NUMROOMS]:1:[ROOMNAME1]|[ROOMNAMES]]",
+  k_guests="Guests", v_guests="[NUMADULT] adult[IF&gt;:[NUMADULT]:1:s|][IF=:[NUMCHILD]:1: and 1 child|][IF&gt;:[NUMCHILD]:1: and [NUMCHILD] children|]",
+  money_l="Bank card", money="Nothing has been charged. The card details stored as a guarantee will not be used and are deleted. Should the cancellation fall outside the period set out in our terms and conditions, we will contact you before any charge is made.",
+  mistake_l="A mistake?", mistake="If you did not request this cancellation, simply reply to this message or call us: we will immediately check availability to reinstate your stay.",
+  again_l="Coming back", again="Our rooms and rates remain available on <a href=\"%sen/reservation/\" style=\"color:%s;\">our booking page</a>: we would be delighted to welcome you on another date." % (SITE, C_GREEN),
+  close1="We remain at your disposal for any question.",
+  close2="We hope to welcome you soon to the Restonica valley,", sign="The team at H\u00f4tel Arena Le Refuge",
+  addr_name="H\u00f4tel Arena Le Refuge", addr1="1425 route de la Restonica", addr2="20250 Corte, Corsica", route="Directions",
+  tel="+33 4 95 46 09 13", mail="contact@hotel-arenalerefuge.com", foot_cgv="Terms and conditions",
+ ),
+}
+
+def build_cancel(L):
+    t = TC[L]
+    style = ("<style class=\"arena-mq\">@import url('https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Inter:wght@400;500;600&display=swap');"
+             ".arena-mail *{-webkit-font-smoothing:antialiased}.arena-mail a,[x-apple-data-detectors]{color:inherit;text-decoration:none}"
+             "@media only screen and (max-width:620px){.arena-pad{padding-left:22px!important;padding-right:22px!important}.arena-mail .arena-hello{font-size:24px!important}}</style>")
+    html = (
+     '<div class="arena-mail" lang="' + ('fr' if L == 'FR' else 'en') + '"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="x-apple-disable-message-reformatting">' + style +
+     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + C_BG + ';"><tbody><tr><td align="center" style="padding:28px 12px;">'
+     '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#FFFFFF;border-radius:18px;overflow:hidden;"><tbody>'
+     '<tr><td style="padding:0;background:' + C_INK + ';line-height:0;" bgcolor="' + C_INK + '"><img src="' + HDR + '" width="600" alt="H\u00f4tel Arena Le Refuge" style="display:block;width:100%;max-width:600px;height:auto;border:0;"></td></tr>'
+     '<tr><td align="center" bgcolor="' + C_INK + '" style="background:' + C_INK + ';padding:0 24px 26px;"><p style="margin:0;font-family:' + SERIF + ';font-size:11px;letter-spacing:3px;text-transform:uppercase;color:' + C_GOLD + ';">' + t["ref"] + '</p></td></tr>'
+     '<tr><td class="arena-pad" style="padding:40px 44px 8px;">'
+     '<p class="arena-hello" style="margin:0 0 18px;font-family:' + SERIF + ';font-size:27px;line-height:1.25;letter-spacing:.02em;color:' + C_INK + ';">' + t["hello"] + '</p>'
+     + para(t["intro"], 26) + '</td></tr>'
+     '<tr><td class="arena-pad" style="padding:0 44px 22px;">'
+     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + C_CARD + ';border-radius:14px;"><tbody>'
+     '<tr><td style="padding:22px 24px 14px;">' + label(t["stay"]) +
+     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tbody>' + row(t["k_dates"], t["v_dates"]) + row(t["k_nights"], t["v_nights"]) + row(t["k_rooms"], t["v_rooms"]) + row(t["k_guests"], t["v_guests"], True) +
+     '</tbody></table></td></tr></tbody></table></td></tr>'
+     '<tr><td class="arena-pad" style="padding:6px 44px 0;">' + label(t["money_l"]) + para(t["money"], 20) + label(t["mistake_l"]) + para(t["mistake"], 20) + label(t["again_l"]) + para(t["again"], 30) + '</td></tr>'
+     '<tr><td class="arena-pad" style="padding:0 44px 22px;border-top:1px solid ' + C_LINE + ';"><div style="height:26px;line-height:26px;font-size:0;">&nbsp;</div>'
+     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + C_CARD + ';border-radius:14px;"><tbody><tr><td style="padding:22px 24px 20px;">'
+     '<p style="margin:0 0 10px;font-family:' + SERIF + ';font-size:18px;line-height:1.3;color:' + C_INK + ';">' + t["addr_name"] + '</p>'
+     '<p style="margin:0 0 14px;font-family:' + SANS + ';font-size:15px;line-height:1.6;color:' + C_TEXT + ';">' + t["addr1"] + '<br>' + t["addr2"] + '<br><a href="' + MAPS + '" style="color:' + C_GREEN + ';text-decoration:none;font-weight:500;">' + t["route"] + ' &rarr;</a></p>'
+     '<p style="margin:0;font-family:' + SANS + ';font-size:15px;line-height:1.6;color:' + C_TEXT + ';"><a href="tel:+33495460913" style="color:' + C_INK + ';text-decoration:none;">' + t["tel"] + '</a><br><a href="mailto:contact@hotel-arenalerefuge.com" style="color:' + C_GREEN + ';text-decoration:none;">' + t["mail"] + '</a></p>'
+     '</td></tr></tbody></table></td></tr>'
+     '<tr><td class="arena-pad" style="padding:0 44px 38px;">' + para(t["close1"], 14) +
+     '<p style="margin:0;font-family:' + SANS + ';font-size:15px;line-height:1.75;color:' + C_TEXT + ';">' + t["close2"] + '<br><em style="font-family:' + SERIF + ';font-style:normal;color:' + C_INK + ';">' + t["sign"] + '</em></p></td></tr>'
+     '<tr><td align="center" style="padding:0 24px 20px;font-family:' + SANS + ';font-size:11px;line-height:1.8;color:#8FA39B;">SARL Le Refuge &nbsp;\u00b7&nbsp; <a href="' + SITE + '" style="color:#436161;text-decoration:none;">hotel-arenalerefuge.com</a> &nbsp;\u00b7&nbsp; <a href="' + CGV + '" style="color:#436161;text-decoration:none;">' + t["foot_cgv"] + '</a></td></tr>'
+     '<tr><td style="padding:0;background:' + C_INK + ';line-height:0;" bgcolor="' + C_INK + '"><img src="' + FOOT + '" width="600" alt="H\u00f4tel Arena Le Refuge" style="display:block;width:100%;max-width:600px;height:auto;border:0;"></td></tr>'
+     '</tbody></table></td></tr></tbody></table></div>')
+    return html
+
 if __name__ == "__main__":
     out = {L: build(L) for L in ("FR", "EN")}
+    out.update({"CANCEL_" + L: build_cancel(L) for L in ("FR", "EN")})
     json.dump(out, open(sys.argv[1], "w"), ensure_ascii=False)
     for L in out: print(L, len(out[L]))
