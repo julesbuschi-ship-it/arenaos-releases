@@ -23,10 +23,10 @@ T = {
   hello="[GUESTTITLE] [GUESTNAME],",
   intro="Nous vous remercions d'avoir choisi l'Hôtel Arena Le Refuge et avons le plaisir de vous confirmer votre réservation.",
   dates="Nous vous attendons le <strong>[IF :[FIRSTNIGHT:{%d}]:01:[FIRSTNIGHT:{%A}] 1er [FIRSTNIGHT:{%B %Y}]|[FIRSTNIGHT:{%A %e %B %Y}]]</strong>, à partir de 14h30. Les chambres sont à libérer le jour du départ, <strong>[IF :[LEAVINGDAY:{%d}]:01:[LEAVINGDAY:{%A}] 1er [LEAVINGDAY:{%B %Y}]|[LEAVINGDAY:{%A %e %B %Y}]]</strong>, avant 11h00.",
-  stay="Votre séjour", k_nights="Séjour", v_nights="[NUMNIGHT] nuit[IF gt;:[NUMNIGHT]:1:s|]",
-  k_rooms="Chambre[IF gt;:[NUMROOMS]:1:s|]", v_rooms="[IF :[NUMROOMS]:1:[ROOMNAME1]|[ROOMNAMES]]",
-  k_guests="Voyageurs", v_guests="[NUMADULT] adulte[IF gt;:[NUMADULT]:1:s|][IF :[NUMCHILD]:1: et 1 enfant|][IF gt;:[NUMCHILD]:1: et [NUMCHILD] enfants|]",
-  k_arrival="Arrivée prévue", v_arrival="[GUESTARRIVALTIME]",
+  stay="Votre séjour", k_nights="Séjour", v_nights="[NUMNIGHT] nuit[IF &gt;:[NUMNIGHT]:1:s|]",
+  k_rooms="Chambre[IF &gt;:[NUMROOMS]:1:s|]", v_rooms="[IF :[NUMROOMS]:1:[ROOMNAME1]|[ROOMNAMES]]",
+  k_guests="Voyageurs", v_guests="[NUMADULT] adulte[IF &gt;:[NUMADULT]:1:s|][IF :[NUMCHILD]:1: et 1 enfant|][IF &gt;:[NUMCHILD]:1: et [NUMCHILD] enfants|]",
+  k_arrival="Arrivée prévue", v_arrival="[IF :[GUESTARRIVALTIME]::non précisée|[GUESTARRIVALTIME]]",
   amount="Montant du séjour", invoice="[INVOICE:GRP_QTY_TOT_GRT_CUA€]",
   pay_l="Paiement", pay="Le règlement s'effectue sur place. Aucun montant n'a été prélevé à ce jour : les coordonnées de votre carte bancaire ont été enregistrées à titre de garantie.",
   cancel_l="Annulation", cancel="Vous pouvez annuler ou modifier votre réservation sans frais jusqu'à sept jours avant la date d'arrivée, en répondant simplement à ce message ou en nous appelant. Au-delà de ce délai, l'intégralité du séjour reste due. Les conditions générales de vente sont consultables <a href=\"%s\" style=\"color:%s;\">ici</a>." % (CGV, C_GREEN),
@@ -49,10 +49,10 @@ T = {
   hello="[GUESTTITLE] [GUESTNAME],",
   intro="Thank you for choosing Hôtel Arena Le Refuge. We are pleased to confirm your booking.",
   dates="We look forward to welcoming you on <strong>[FIRSTNIGHT:{%A %e %B %Y}]</strong> from 2:30 pm. Rooms are to be vacated on the day of departure, <strong>[LEAVINGDAY:{%A %e %B %Y}]</strong>, before 11:00 am.",
-  stay="Your stay", k_nights="Stay", v_nights="[NUMNIGHT] night[IF gt;:[NUMNIGHT]:1:s|]",
-  k_rooms="Room[IF gt;:[NUMROOMS]:1:s|]", v_rooms="[IF :[NUMROOMS]:1:[ROOMNAME1]|[ROOMNAMES]]",
-  k_guests="Guests", v_guests="[NUMADULT] adult[IF gt;:[NUMADULT]:1:s|][IF :[NUMCHILD]:1: and 1 child|][IF gt;:[NUMCHILD]:1: and [NUMCHILD] children|]",
-  k_arrival="Expected arrival", v_arrival="[GUESTARRIVALTIME]",
+  stay="Your stay", k_nights="Stay", v_nights="[NUMNIGHT] night[IF &gt;:[NUMNIGHT]:1:s|]",
+  k_rooms="Room[IF &gt;:[NUMROOMS]:1:s|]", v_rooms="[IF :[NUMROOMS]:1:[ROOMNAME1]|[ROOMNAMES]]",
+  k_guests="Guests", v_guests="[NUMADULT] adult[IF &gt;:[NUMADULT]:1:s|][IF :[NUMCHILD]:1: and 1 child|][IF &gt;:[NUMCHILD]:1: and [NUMCHILD] children|]",
+  k_arrival="Expected arrival", v_arrival="[IF :[GUESTARRIVALTIME]::not specified|[GUESTARRIVALTIME]]",
   amount="Your stay in detail", invoice="[INVOICE:GRP_QTY_TOT_GRT_CUA€_LANEN]",
   pay_l="Payment", pay="Payment is made at the hotel. Nothing has been charged to date: your card details have been stored as a guarantee only.",
   cancel_l="Cancellation", cancel="You may cancel or change your booking free of charge up to seven days before the arrival date, simply by replying to this message or calling us. After that, the full stay remains due. Our terms and conditions are available <a href=\"%s\" style=\"color:%s;\">here</a>." % (CGV, C_GREEN),
@@ -119,7 +119,7 @@ def build(L):
      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + C_CARD + ';border-radius:14px;"><tbody>'
      '<tr><td style="padding:22px 24px 8px;">' + label(t["stay"]) +
      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tbody>' + row(t["k_nights"], t["v_nights"]) + row(t["k_rooms"], t["v_rooms"]) + row(t["k_guests"], t["v_guests"]) +
-     '[IF :[GUESTARRIVALTIME]::|' + row(t["k_arrival"], t["v_arrival"], True) + ']' +
+     row(t["k_arrival"], t["v_arrival"], True) +
      '</tbody></table></td></tr>'
      '<tr><td style="padding:14px 24px 0;border-top:1px solid ' + C_LINE + ';">' + label(t["amount"]) + '</td></tr>'
      '<tr><td class="arena-inv" style="padding:0 24px 18px;">' + t["invoice"] + '</td></tr>'
