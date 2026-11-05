@@ -28,7 +28,7 @@
     i.replaceWith(s);
   }
 
-  /* 2. Options : plafonner la quantité (petits-déjeuners : adultes × nuits / enfants × nuits ; animaux : 3), masquer la ligne enfant sans enfant */
+  /* 2. Options : plafonner la quantité (petits-déjeuners : adultes × nuits / enfants × nuits ; animaux : 2), masquer la ligne enfant sans enfant */
   function capBreakfasts() {
     var n = +(d.querySelector('[name=numnight]') || {}).value || 1;
     function sum(p) {
@@ -39,7 +39,7 @@
     var A = sum('na'), C = sum('nc');
     d.querySelectorAll('select[id^=optextra]').forEach(function (e) {
       var r = e.closest('.row'), x = r.textContent,
-          m = /animal|pet\b/i.test(x) ? 3 : /enfant|child/i.test(x) ? C : A;
+          m = /animal|pet\b/i.test(x) ? 2 : /enfant|child/i.test(x) ? C : A;
       if (!m) { r.style.display = 'none'; return; }
       [].slice.call(e.options).forEach(function (o) { if (+o.value > m) o.remove(); });
     });
