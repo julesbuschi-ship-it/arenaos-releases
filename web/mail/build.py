@@ -103,7 +103,9 @@ def build(L):
              "</style>")
     items = "".join('<p style="margin:0 0 14px;font-family:%s;font-size:15px;line-height:1.75;color:%s;"><span style="display:block;font-family:%s;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:%s;margin:0 0 3px;">%s</span>%s</p>' % (SANS, C_TEXT, SANS, C_GREEN, k, v) for k, v in t["items"])
     html = (
-     '<div class="arena-mail">' + style +
+     # Beds24 envoie <html><body> sans <head> : sans viewport, iPhone Mail met en page sur 980 px puis réduit tout.
+     # WebKit honore la balise viewport même dans le body ; sur l'écran de confirmation Beds24 elle est identique à celle de la page.
+     '<div class="arena-mail"><meta name="viewport" content="width=device-width, initial-scale=1">' + style +
      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + C_BG + ';"><tbody><tr><td align="center" style="padding:28px 12px;">'
      '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#FFFFFF;border-radius:18px;overflow:hidden;"><tbody>'
      # en-tête
