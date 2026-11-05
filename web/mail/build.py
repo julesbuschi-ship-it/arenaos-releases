@@ -105,7 +105,8 @@ def build(L):
     html = (
      # Beds24 envoie <html><body> sans <head> : sans viewport, iPhone Mail met en page sur 980 px puis réduit tout.
      # WebKit honore la balise viewport même dans le body ; sur l'écran de confirmation Beds24 elle est identique à celle de la page.
-     '<div class="arena-mail"><meta name="viewport" content="width=device-width, initial-scale=1">' + style +
+     # x-apple-disable-message-reformatting : empêche Apple Mail de « reformater » (réduire) le message sur iPhone.
+     '<div class="arena-mail"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="x-apple-disable-message-reformatting">' + style +
      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + C_BG + ';"><tbody><tr><td align="center" style="padding:28px 12px;">'
      '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#FFFFFF;border-radius:18px;overflow:hidden;"><tbody>'
      # en-tête
