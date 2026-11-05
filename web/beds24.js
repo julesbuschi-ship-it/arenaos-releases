@@ -163,7 +163,30 @@
     });
   }
 
+  /* 6. Ecran de confirmation : libelle « Nouvelle reservation », « 2 chambres doubles », « 1 nuit », dates FR sans virgule
+        (auparavant dans un <script> du champ Confirmation « derniere partie », qui partait aussi dans l'e-mail : -3 points mail-tester) */
+  function confirmScreen() {
+    var C = d.querySelector('.bp2bookconfirmed');
+    if (!C) return;
+    var F = lang() === 'fr', A = C.querySelector('.bookagainlink a');
+    if (A) A.textContent = F ? 'Nouvelle réservation' : 'New booking';
+    function plural(n) {
+      return F ? n.split(' ').map(function (w) { return /s$/.test(w) ? w : w + 's'; }).join(' ')
+               : n.replace(/(\S+)$/, function (w) { return /s$/.test(w) ? w : w + 's'; });
+    }
+    C.querySelectorAll('.rn').forEach(function (e) {
+      e.textContent = e.textContent.replace(/([^,]+?) \((\d+)\)/g, function (_, n, q) {
+        n = n.trim().toLowerCase();
+        if (+q > 1) n = plural(n);
+        return q + ' ' + n;
+      });
+    });
+    C.querySelectorAll('.nn').forEach(function (e) { e.textContent = e.textContent.replace(/^1 (nuit|night)s/, '1 $1'); });
+    if (F) C.querySelectorAll('.dt').forEach(function (e) { e.textContent = e.textContent.replace(',', '').replace(/ 1 /, ' 1er '); });
+  }
+
   ready(function () {
+    try { confirmScreen(); } catch (e) {}
     try { titleSelect(); } catch (e) {}
     try { capBreakfasts(); } catch (e) {}
     try { cgvText(); } catch (e) {}
