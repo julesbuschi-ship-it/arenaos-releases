@@ -5,7 +5,7 @@
    Le CSS est dans WordPress (Footer 88, post-88.css) — voir le board A→Z. */
 (function () {
   'use strict';
-  var d = document;
+  var d = document, w = window;
 
   function ready(fn) {
     if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', fn); else fn();
@@ -140,6 +140,29 @@
     t.style.display = 'none';
   }
 
+  /* 5. Barre d'etapes : revenir aux ecrans precedents */
+  function stepLinks() {
+    var bar = d.getElementById('arena-top');
+    if (!bar) return;
+    var m = d.body.className.match(/arena-s(\d)/), cur = m ? +m[1] : 0, fr = lang() === 'fr';
+    if (!cur) return;
+    [].forEach.call(bar.querySelectorAll('b'), function (b, i) {
+      var n = i + 1;
+      if (n >= cur) return;
+      b.classList.add('arena-step-link');
+      b.title = fr ? 'Revenir \u00e0 cette \u00e9tape' : 'Go back to this step';
+      b.addEventListener('click', function () {
+        if (cur === 2) { w.scrollTo({ top: 0, behavior: 'smooth' }); var ci = d.getElementById('checkin'); if (ci) ci.focus(); return; }
+        if (cur === 3) { var back = d.querySelector('.book_bookingbackright a'); if (back) back.click(); else w.history.back(); return; }
+        if (cur === 4) {
+          var f = d.querySelector('.ppcancelbutton form');
+          var ok = w.confirm(fr ? 'Revenir en arri\u00e8re annule la r\u00e9servation en cours (aucune carte n\u2019est enregistr\u00e9e). Continuer ?' : 'Going back cancels the current booking (no card is stored). Continue?');
+          if (ok) { if (f) f.submit(); else w.history.back(); }
+        }
+      });
+    });
+  }
+
   ready(function () {
     try { titleSelect(); } catch (e) {}
     try { capBreakfasts(); } catch (e) {}
@@ -147,5 +170,6 @@
     try { privacyNote(); } catch (e) {}
     try { formErrors(); } catch (e) {}
     try { guaranteeSummary(); } catch (e) {}
+    try { stepLinks(); } catch (e) {}
   });
 })();
