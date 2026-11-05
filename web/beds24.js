@@ -28,7 +28,7 @@
     i.replaceWith(s);
   }
 
-  /* 2. Petits-déjeuners : plafonner la quantité à adultes × nuits (enfants × nuits), masquer la ligne enfant sans enfant */
+  /* 2. Options : plafonner la quantité (petits-déjeuners : adultes × nuits / enfants × nuits ; animaux : 3), masquer la ligne enfant sans enfant */
   function capBreakfasts() {
     var n = +(d.querySelector('[name=numnight]') || {}).value || 1;
     function sum(p) {
@@ -38,9 +38,26 @@
     }
     var A = sum('na'), C = sum('nc');
     d.querySelectorAll('select[id^=optextra]').forEach(function (e) {
-      var r = e.closest('.row'), m = /enfant|child/i.test(r.textContent) ? C : A;
+      var r = e.closest('.row'), x = r.textContent,
+          m = /animal|pet\b/i.test(x) ? 3 : /enfant|child/i.test(x) ? C : A;
       if (!m) { r.style.display = 'none'; return; }
       [].slice.call(e.options).forEach(function (o) { if (+o.value > m) o.remove(); });
+    });
+  }
+
+  /* 2b. Ligne CGV : retirer l'espace insécable qui décale la première ligne du texte */
+  function cgvText() {
+    var cb = d.querySelector('.b24-guestdetails .questionrow input[type=checkbox]');
+    if (!cb) return;
+    var row = cb.closest('.questionrow');
+    [].forEach.call(row.children, function (c) {
+      if (c.contains(cb)) return;
+      var done = false;
+      [].forEach.call(c.childNodes, function (n) {
+        if (done || n.nodeType !== 3 || !/\S/.test(n.textContent.replace(/\u00a0/g, ' '))) return;
+        n.textContent = n.textContent.replace(/^[\s\u00a0]+/, '');
+        done = true;
+      });
     });
   }
 
@@ -108,6 +125,7 @@
   ready(function () {
     try { titleSelect(); } catch (e) {}
     try { capBreakfasts(); } catch (e) {}
+    try { cgvText(); } catch (e) {}
     try { formErrors(); } catch (e) {}
     try { guaranteeSummary(); } catch (e) {}
   });
