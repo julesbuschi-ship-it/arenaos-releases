@@ -14,7 +14,12 @@ const DAYS = 60;
 const OUT = new URL('./availability.json', import.meta.url);
 
 const iso = (d) => d.toISOString().slice(0, 10);
-const today = new Date(); today.setUTCHours(0, 0, 0, 0);
+const now = new Date(); now.setUTCHours(0, 0, 0, 0);
+// Saison : 1er mai → 15 octobre. Hors saison, on expose les 60 premiers jours de la saison suivante.
+let today = now;
+const y = now.getUTCFullYear();
+const open = new Date(Date.UTC(y, 4, 1)), close = new Date(Date.UTC(y, 9, 15));
+if (now < open) today = open; else if (now > close) today = new Date(Date.UTC(y + 1, 4, 1));
 const start = iso(today);
 const end = iso(new Date(today.getTime() + (DAYS - 1) * 864e5));
 
