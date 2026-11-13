@@ -206,8 +206,24 @@
     }, true);
   }
 
+  /* 8. Arrivee depuis une carte chambre de /reservation/ (#arena-room=<roomid>) : faire defiler jusqu'a la chambre et la mettre en avant */
+  function focusRoom() {
+    var m = (w.location.hash || '').match(/arena-room=(\d+)/);
+    if (!m) return;
+    var box = d.getElementById('roomid' + m[1]);
+    if (!box) return;
+    var row = box.closest('.b24-multipricebox') || box;
+    var st = d.createElement('style');
+    st.textContent = '.arena-room-focus{outline:2px solid #189979;outline-offset:6px;border-radius:14px;transition:outline-color 1.2s}.arena-room-focus.is-off{outline-color:transparent}';
+    d.head.appendChild(st);
+    row.classList.add('arena-room-focus');
+    setTimeout(function () { row.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
+    setTimeout(function () { row.classList.add('is-off'); }, 3500);
+  }
+
   ready(function () {
     try { overlayBridge(); } catch (e) {}
+    try { focusRoom(); } catch (e) {}
     try { confirmScreen(); } catch (e) {}
     try { titleSelect(); } catch (e) {}
     try { capBreakfasts(); } catch (e) {}
