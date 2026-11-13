@@ -1,0 +1,204 @@
+{
+ "title": "Réserver un hôtel à Corte – Hôtel Arena Le Refuge, Restonica",
+ "meta": "Réservez en direct à l’Hôtel Arena Le Refuge, hôtel 3 étoiles à Corte au bord de la Restonica : meilleur tarif, aucun débit, annulation sans frais jusqu’à 7 jours.",
+ "h1": "Réserver votre hôtel à Corte, en direct",
+ "h1_en": "Book your hotel in Corte, direct",
+ "jsonld": {
+  "@context": "https://schema.org",
+  "@graph": [
+   {
+    "@type": "Hotel",
+    "@id": "https://www.hotel-arenalerefuge.com/#hotel",
+    "name": "Hôtel Arena Le Refuge",
+    "url": "https://www.hotel-arenalerefuge.com/",
+    "telephone": "+33495460913",
+    "email": "contact@hotel-arenalerefuge.com",
+    "starRating": {
+     "@type": "Rating",
+     "ratingValue": "3"
+    },
+    "address": {
+     "@type": "PostalAddress",
+     "streetAddress": "1425 route de la Restonica",
+     "postalCode": "20250",
+     "addressLocality": "Corte",
+     "addressRegion": "Corse",
+     "addressCountry": "FR"
+    },
+    "checkinTime": "14:30",
+    "checkoutTime": "11:00",
+    "petsAllowed": true,
+    "numberOfRooms": 16,
+    "priceRange": "140 € – 220 €",
+    "currenciesAccepted": "EUR",
+    "paymentAccepted": "Carte bancaire, espèces, chèque",
+    "amenityFeature": [
+     {
+      "@type": "LocationFeatureSpecification",
+      "name": "Parking privé gratuit",
+      "value": true
+     },
+     {
+      "@type": "LocationFeatureSpecification",
+      "name": "Climatisation",
+      "value": true
+     },
+     {
+      "@type": "LocationFeatureSpecification",
+      "name": "Wi-Fi",
+      "value": true
+     },
+     {
+      "@type": "LocationFeatureSpecification",
+      "name": "Terrasse au bord de la rivière",
+      "value": true
+     },
+     {
+      "@type": "LocationFeatureSpecification",
+      "name": "Bar",
+      "value": true
+     }
+    ],
+    "containsPlace": [
+     {
+      "@type": "HotelRoom",
+      "name": "Chambre double ou twin",
+      "occupancy": {
+       "@type": "QuantitativeValue",
+       "maxValue": 2
+      },
+      "offers": {
+       "@type": "Offer",
+       "priceCurrency": "EUR",
+       "price": "140",
+       "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "140",
+        "priceCurrency": "EUR",
+        "unitText": "nuit"
+       },
+       "availabilityStarts": "2027-05-01",
+       "url": "https://www.hotel-arenalerefuge.com/reservation/"
+      }
+     },
+     {
+      "@type": "HotelRoom",
+      "name": "Chambre triple",
+      "occupancy": {
+       "@type": "QuantitativeValue",
+       "maxValue": 3
+      },
+      "offers": {
+       "@type": "Offer",
+       "priceCurrency": "EUR",
+       "price": "190",
+       "url": "https://www.hotel-arenalerefuge.com/reservation/"
+      }
+     },
+     {
+      "@type": "HotelRoom",
+      "name": "Chambre quadruple",
+      "occupancy": {
+       "@type": "QuantitativeValue",
+       "maxValue": 4
+      },
+      "offers": {
+       "@type": "Offer",
+       "priceCurrency": "EUR",
+       "price": "220",
+       "url": "https://www.hotel-arenalerefuge.com/reservation/"
+      }
+     }
+    ],
+    "potentialAction": {
+     "@type": "ReserveAction",
+     "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://www.hotel-arenalerefuge.com/reservation/",
+      "inLanguage": "fr",
+      "actionPlatform": [
+       "http://schema.org/DesktopWebPlatform",
+       "http://schema.org/MobileWebPlatform"
+      ]
+     },
+     "result": {
+      "@type": "LodgingReservation",
+      "name": "Réservation de chambre"
+     }
+    }
+   },
+   {
+    "@type": "WebPage",
+    "@id": "https://www.hotel-arenalerefuge.com/reservation/#webpage",
+    "url": "https://www.hotel-arenalerefuge.com/reservation/",
+    "name": "Réserver un hôtel à Corte – Hôtel Arena Le Refuge, Restonica",
+    "inLanguage": "fr-FR",
+    "about": {
+     "@id": "https://www.hotel-arenalerefuge.com/#hotel"
+    },
+    "breadcrumb": {
+     "@type": "BreadcrumbList",
+     "itemListElement": [
+      {
+       "@type": "ListItem",
+       "position": 1,
+       "name": "Accueil",
+       "item": "https://www.hotel-arenalerefuge.com/"
+      },
+      {
+       "@type": "ListItem",
+       "position": 2,
+       "name": "Réserver",
+       "item": "https://www.hotel-arenalerefuge.com/reservation/"
+      }
+     ]
+    }
+   },
+   {
+    "@type": "FAQPage",
+    "mainEntity": [
+     {
+      "@type": "Question",
+      "name": "Quand suis-je débité ?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Jamais à la réservation. Le règlement se fait sur place, par carte, en espèces ou par chèque. Votre carte bancaire sert uniquement de garantie en cas de non-présentation ou d’annulation tardive."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Puis-je modifier ou annuler ma réservation ?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Oui, sans frais jusqu’à 7 jours avant la date d’arrivée : il vous suffit de répondre à votre e-mail de confirmation ou de nous appeler. Passé ce délai, ou en cas de non-présentation, l’intégralité du séjour reste due."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "À quelle heure puis-je arriver ?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Les chambres sont disponibles à partir de 14 h 30 et sont à libérer avant 11 h 00 le jour du départ. Si vous pensez arriver après 21 h 00, merci de nous prévenir afin que nous organisions votre accueil."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Le petit-déjeuner est-il inclus ?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Le petit-déjeuner est servi de 7 h 30 à 10 h 30, en salle ou en terrasse au bord de la rivière, au tarif de 15 € par personne (10 € par enfant), réglé sur place. Vous pouvez l’indiquer lors de la réservation ou le décider sur place."
+      }
+     },
+     {
+      "@type": "Question",
+      "name": "Parking, animaux ?",
+      "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Un parking privé gratuit est à votre disposition directement devant l’hôtel. Vos compagnons à quatre pattes sont les bienvenus, sur demande, moyennant un supplément de 10 € par animal et par nuit."
+      }
+     }
+    ]
+   }
+  ]
+ }
+}
