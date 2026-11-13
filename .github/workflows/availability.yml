@@ -22,7 +22,7 @@ jobs:
           node-version: '22'
       - name: Récupérer les 60 prochains jours
         env:
-          BEDS24_TOKEN: ${{ secrets.BEDS24_TOKEN }}
+          BEDS24_REFRESH_TOKEN: ${{ secrets.BEDS24_REFRESH_TOKEN }}
         run: node web/data/fetch-availability.mjs
       - name: Publier si changement
         run: |

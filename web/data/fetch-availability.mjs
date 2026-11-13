@@ -5,8 +5,15 @@
 
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 
-const TOKEN = process.env.BEDS24_TOKEN;
-if (!TOKEN) { console.error('BEDS24_TOKEN manquant'); process.exit(1); }
+let TOKEN = process.env.BEDS24_TOKEN;
+if (!TOKEN && process.env.BEDS24_REFRESH_TOKEN) {
+  // Jeton d'accès (24 h) obtenu à chaque exécution à partir du refresh token (qui ne périme pas tant qu'il sert)
+  const r = await fetch('https://api.beds24.com/v2/authentication/token', { headers: { refreshToken: process.env.BEDS24_REFRESH_TOKEN, accept: 'application/json' } });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok || !j.token) { console.error('Refresh Beds24 HTTP', r.status, JSON.stringify(j).slice(0, 300)); process.exit(1); }
+  TOKEN = j.token;
+}
+if (!TOKEN) { console.error('BEDS24_TOKEN ou BEDS24_REFRESH_TOKEN manquant'); process.exit(1); }
 
 const PROP = 353488;
 const ROOMS = { 729093: 'double', 729374: 'twin', 729272: 'triple', 729275: 'quadruple' };

@@ -1,0 +1,28 @@
+name: Beds24 — échange du code d'invitation (une fois)
+
+# À lancer à la main (Actions › ce workflow › Run workflow) avec le code d'invitation Beds24 (API v2, lecture).
+# Le refresh token obtenu est chiffré avec .github/keys/setup-pub.pem et affiché dans le journal ;
+# seul le détenteur de la clé privée peut le lire, puis l'enregistre comme secret BEDS24_REFRESH_TOKEN.
+
+on:
+  workflow_dispatch:
+    inputs:
+      invite_code:
+        description: "Code d'invitation Beds24 (API v2)"
+        required: true
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Échanger le code et chiffrer le refresh token
+        env:
+          CODE: ${{ github.event.inputs.invite_code }}
+        run: |
+          set -e
+          curl -sS -H "code: $CODE" -H "accept: application/json" https://api.beds24.com/v2/authentication/setup > resp.json
+          node -e "const j=require('./resp.json'); if(!j.refreshToken){console.error(JSON.stringify(j));process.exit(1)}; require('fs').writeFileSync('rt.txt', j.refreshToken); console.log('token OK, expiresIn=', j.expiresIn)"
+          openssl pkeyutl -encrypt -pubin -inkey .github/keys/setup-pub.pem -pkeyopt rsa_padding_mode:oaep -in rt.txt -out rt.enc
+          echo "=====ENC====="; base64 -w0 rt.enc; echo; echo "=====END====="
+          rm -f resp.json rt.txt rt.enc
