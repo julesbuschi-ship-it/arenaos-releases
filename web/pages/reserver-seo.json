@@ -1,6 +1,6 @@
 {
  "title": "Réserver un hôtel à Corte – Hôtel Arena Le Refuge, Restonica",
- "meta": "Réservez en direct à l’Hôtel Arena Le Refuge, hôtel 3 étoiles à Corte au bord de la Restonica : meilleur tarif, aucun débit, annulation sans frais jusqu’à 7 jours.",
+ "meta": "Hôtel 3 étoiles à Corte, au bord de la Restonica. Réservez en direct : meilleur tarif, aucun débit, annulation sans frais jusqu’à 7 jours avant l’arrivée.",
  "h1": "Réserver votre hôtel à Corte, en direct",
  "h1_en": "Book your hotel in Corte, direct",
  "jsonld": {
@@ -9,27 +9,9 @@
    {
     "@type": "Hotel",
     "@id": "https://www.hotel-arenalerefuge.com/#hotel",
-    "name": "Hôtel Arena Le Refuge",
-    "url": "https://www.hotel-arenalerefuge.com/",
-    "telephone": "+33495460913",
-    "email": "contact@hotel-arenalerefuge.com",
-    "starRating": {
-     "@type": "Rating",
-     "ratingValue": "3"
-    },
-    "address": {
-     "@type": "PostalAddress",
-     "streetAddress": "1425 route de la Restonica",
-     "postalCode": "20250",
-     "addressLocality": "Corte",
-     "addressRegion": "Corse",
-     "addressCountry": "FR"
-    },
     "checkinTime": "14:30",
     "checkoutTime": "11:00",
-    "petsAllowed": true,
     "numberOfRooms": 16,
-    "priceRange": "140 € – 220 €",
     "currenciesAccepted": "EUR",
     "paymentAccepted": "Carte bancaire, espèces, chèque",
     "amenityFeature": [
@@ -59,57 +41,6 @@
       "value": true
      }
     ],
-    "containsPlace": [
-     {
-      "@type": "HotelRoom",
-      "name": "Chambre double ou twin",
-      "occupancy": {
-       "@type": "QuantitativeValue",
-       "maxValue": 2
-      },
-      "offers": {
-       "@type": "Offer",
-       "priceCurrency": "EUR",
-       "price": "140",
-       "priceSpecification": {
-        "@type": "UnitPriceSpecification",
-        "price": "140",
-        "priceCurrency": "EUR",
-        "unitText": "nuit"
-       },
-       "availabilityStarts": "2027-05-01",
-       "url": "https://www.hotel-arenalerefuge.com/reservation/"
-      }
-     },
-     {
-      "@type": "HotelRoom",
-      "name": "Chambre triple",
-      "occupancy": {
-       "@type": "QuantitativeValue",
-       "maxValue": 3
-      },
-      "offers": {
-       "@type": "Offer",
-       "priceCurrency": "EUR",
-       "price": "190",
-       "url": "https://www.hotel-arenalerefuge.com/reservation/"
-      }
-     },
-     {
-      "@type": "HotelRoom",
-      "name": "Chambre quadruple",
-      "occupancy": {
-       "@type": "QuantitativeValue",
-       "maxValue": 4
-      },
-      "offers": {
-       "@type": "Offer",
-       "priceCurrency": "EUR",
-       "price": "220",
-       "url": "https://www.hotel-arenalerefuge.com/reservation/"
-      }
-     }
-    ],
     "potentialAction": {
      "@type": "ReserveAction",
      "target": {
@@ -125,7 +56,54 @@
       "@type": "LodgingReservation",
       "name": "Réservation de chambre"
      }
-    }
+    },
+    "makesOffer": [
+     {
+      "@type": "Offer",
+      "priceCurrency": "EUR",
+      "price": "140",
+      "url": "https://www.hotel-arenalerefuge.com/reservation/",
+      "name": "Chambre double ou twin",
+      "itemOffered": {
+       "@type": "HotelRoom",
+       "name": "Chambre double ou twin",
+       "occupancy": {
+        "@type": "QuantitativeValue",
+        "maxValue": 2
+       }
+      }
+     },
+     {
+      "@type": "Offer",
+      "priceCurrency": "EUR",
+      "price": "190",
+      "url": "https://www.hotel-arenalerefuge.com/reservation/",
+      "name": "Chambre triple",
+      "itemOffered": {
+       "@type": "HotelRoom",
+       "name": "Chambre triple",
+       "occupancy": {
+        "@type": "QuantitativeValue",
+        "maxValue": 3
+       }
+      }
+     },
+     {
+      "@type": "Offer",
+      "priceCurrency": "EUR",
+      "price": "220",
+      "url": "https://www.hotel-arenalerefuge.com/reservation/",
+      "name": "Chambre quadruple",
+      "itemOffered": {
+       "@type": "HotelRoom",
+       "name": "Chambre quadruple",
+       "occupancy": {
+        "@type": "QuantitativeValue",
+        "maxValue": 4
+       }
+      }
+     }
+    ]
    },
    {
     "@type": "WebPage",
@@ -200,5 +178,6 @@
     ]
    }
   ]
- }
+ },
+ "note": "Appliqué le 13/11/2026 : title+meta dans AIOSEO (écran Gutenberg, bouton SEO), H1 + hide_title + JSON-LD + lien Que faire dans le widget 1835ee2f. Le Hotel @id /#hotel fusionne avec le bloc Hotel global du site (AIOSEO). Validé schema.org : 0 erreur, 0 avertissement."
 }
